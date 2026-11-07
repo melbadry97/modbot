@@ -1,0 +1,33 @@
+# Example robot manifest. Copy to robots/<your-robot>.yaml (gitignored) and fill in your ports.
+# Find servo-bus ports with `lerobot-find-port`. Camera ports are an integer index or a device path.
+
+name: tabletop-01
+profile: P1-tabletop-1arm-2cam
+modules:
+  - type: arm
+    instance: follower_01
+    model: so101_follower
+    voltage: 5V
+    port: /dev/tty.usbmodem585A0076841
+    tool: jaw_stock_v1
+
+  - type: camera
+    name: wrist
+    model: uvc-32x32
+    port: 0
+    width: 640
+    height: 480
+    fps: 30
+
+  - type: camera
+    name: top
+    model: webcam-1080p
+    port: 1
+    width: 640
+    height: 480
+    fps: 30
+
+  - type: teleop
+    instance: leader_01
+    model: so101_leader
+    port: /dev/tty.usbmodem575E0031751

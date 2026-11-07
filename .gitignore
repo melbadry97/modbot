@@ -1,0 +1,20 @@
+# Filled-in robot manifests hold local port names; keep only the example in git
+robots/*.yaml
+!robots/*.example.yaml
+
+# LeRobot outputs
+outputs/
+wandb/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Slicer and CAD scratch
+*.3mf
+*.gcode
+*.bak
+
+# OS
+.DS_Store

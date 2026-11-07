@@ -1,0 +1,38 @@
+name: laundry-sort
+version: 0.1.0
+interface: MI-0.1
+profile: P1-tabletop-1arm-2cam
+status: planned          # planned | recording | trained | passing
+
+tools:
+  - jaw_stock_v1
+
+stages:
+  - id: a
+    tasks:
+      - "Put the clothing item in the tray"
+    episodes: 50           # 10 at each of 5 positions in the pickup zone
+    dataset: null          # hf://<user>/laundry-sort-stage-a
+    policy: null           # hf://<user>/act-laundry-sort-a
+    eval: {trials: 20, pass: 16}
+  - id: b
+    tasks:
+      - "Put the light item in the light tray"
+      - "Put the dark item in the dark tray"
+    episodes: 100          # 50 light, 50 dark, over the same 5 positions
+    dataset: null
+    policy: null
+    eval: {trials: 20, pass: 14}
+
+policy_type: act
+observation_keys:
+  - observation.state
+  - observation.images.wrist
+  - observation.images.top
+
+items:
+  kind: small light clothing only (socks, washcloths, baby clothes)
+  max_mass_g: 150
+
+results: []
+# - {stage: a, robot: tabletop-01, date: 2026-12-01, success: 0, notes: ""}

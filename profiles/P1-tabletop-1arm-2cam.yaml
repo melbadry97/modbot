@@ -1,0 +1,41 @@
+# Profile P1: one arm on a table, wrist and top cameras. Target of the laundry-sort task pack.
+# Positions are in millimetres in the arm-base frame: origin at the follower's shoulder-pan axis
+# on the table surface, x forward (away from the operator), y to the arm's left, z up.
+# TODO: numbers marked "set on first build" are placeholders until tabletop-01 works.
+
+name: P1-tabletop-1arm-2cam
+interface: MI-0.1
+
+slots:
+  - role: arm
+    model: so101_follower
+    voltage: [5V, 12V]        # either follower variant is allowed
+    mount: table_clamp         # or a 4040 foot at the same origin
+    tool: jaw_stock_v1
+
+  - role: camera
+    name: wrist
+    pattern: A                 # 32x32 UVC module on the repo's wrist mount
+    frame: wrist
+
+  - role: camera
+    name: top
+    pattern: B                 # any webcam with a 1/4"-20 thread
+    frame: arm_base
+    at: [150, 0, 600]          # set on first build
+    look_at: [250, 0, 0]       # set on first build
+
+  - role: teleop
+    model: so101_leader
+    voltage: 5V
+
+workspace:
+  pickup_zone_mm: [250, 250]   # width x depth, centred at [250, 0] in arm-base frame
+  tray_light_at: [200, 250]    # set on first build
+  tray_dark_at: [200, -250]    # set on first build
+  tray_max_wall_height_mm: 60
+
+observation_keys:
+  - observation.state
+  - observation.images.wrist
+  - observation.images.top
